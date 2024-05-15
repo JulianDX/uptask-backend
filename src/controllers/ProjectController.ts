@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import Project from "../models/Project";
 
 export class ProjectController {
-  // Obtener todos los registros
+  // Get all projects
 
   static getAllProjects = async (req: Request, res: Response) => {
     try {
@@ -13,7 +13,7 @@ export class ProjectController {
     }
   };
 
-  // Obtener proyecto por ID
+  // Get project by ID
 
   static getProjectByID = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -25,7 +25,7 @@ export class ProjectController {
     }
   };
 
-  // Crear proyecto
+  // Create project
 
   static createProject = async (req: Request, res: Response) => {
     const project = new Project(req.body);
@@ -37,7 +37,7 @@ export class ProjectController {
     }
   };
 
-  // Actualizar proyecto
+  // Update project
 
   static updateProject = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -56,7 +56,7 @@ export class ProjectController {
     }
   };
 
-  // Eliminar proyecto
+  // Delete project
 
   static deleteProject = async (req: Request, res: Response) => {
     const { id } = req.params;
