@@ -44,8 +44,22 @@ export class TaskController {
         }
       });
       req.project.tasks = newTaskArray;
-      await Promise.allSettled([Task.findByIdAndDelete(req.task.id), req.project.save()]);
+      await Promise.allSettled([
+        Task.findByIdAndDelete(req.task.id),
+        req.project.save(),
+      ]);
       res.status(200).json({ msg: "Tarea eliminada" });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static updateTaskStatus = async (req: Request, res: Response) => {
+    const task = req.task;
+    try {
+      task.taskStatus = req.body.taskStatus;
+      await task.save();
+      res.status(200).json({ msg: "Estado actualizado" });
     } catch (error) {
       console.log(error);
     }

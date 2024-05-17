@@ -90,6 +90,19 @@ router.put(
   TaskController.updateTask
 );
 
+router.put(
+  "/:projectId/tasks/:taskId/status",
+  param("projectId").isMongoId().withMessage("ID del proyecto no válido"),
+  param("taskId").isMongoId().withMessage("ID de la tarea no válido"),
+  body("taskStatus")
+    .notEmpty()
+    .withMessage("El estado de la tarea es obligatorio"),
+  handleInputErrors,
+  verifyProjectExists,
+  verifyTaskExists,
+  TaskController.updateTaskStatus
+);
+
 router.delete(
   "/:projectId/tasks/:taskId",
   param("projectId").isMongoId().withMessage("ID del proyecto no válido"),
