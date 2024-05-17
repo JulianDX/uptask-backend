@@ -16,9 +16,9 @@ export class ProjectController {
   // Get project by ID
 
   static getProjectByID = async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { projectId } = req.params;
     try {
-      const project = await Project.findById(id);
+      const project = await Project.findById(projectId);
       res.json(project);
     } catch (error) {
       console.log(error);

@@ -9,7 +9,7 @@ export class TaskController {
       project.tasks.push(task);
       task.project = project.id;
       await Promise.allSettled([task.save(), project.save()]);
-      res.json({ msg: "Tarea creada" });
+      res.status(201).json({ msg: "Tarea creada" });
     } catch (error) {
       console.log(error);
     }
@@ -19,6 +19,33 @@ export class TaskController {
     try {
       const tasks = await Task.find({ project: req.project.id });
       res.json(tasks);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static updateTask = async (req: Request, res: Response) => {
+    try {
+      const task = req.task;
+      task.taskName = req.body.taskName;
+      task.description = req.body.description;
+      task.save();
+      res.status(200).json({ msg: "Tarea actualizada" });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static deleteTask = async (req: Request, res: Response) => {
+    try {
+      const newTaskArray = req.project.tasks.filter((task) => {
+        if (task.toString() !== req.task.id.toString()) {
+          return task;
+        }
+      });
+      req.project.tasks = newTaskArray;
+      await Promise.allSettled([Task.findByIdAndDelete(req.task.id), req.project.save()]);
+      res.status(200).json({ msg: "Tarea eliminada" });
     } catch (error) {
       console.log(error);
     }
