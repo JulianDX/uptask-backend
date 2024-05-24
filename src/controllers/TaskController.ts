@@ -24,6 +24,18 @@ export class TaskController {
     }
   };
 
+  static getTaskById = async (req: Request, res: Response) => {
+    try {
+      const task = await Task.find({
+        project: req.project.id,
+        _id: req.task.id,
+      });
+      res.json(task);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   static updateTask = async (req: Request, res: Response) => {
     try {
       const task = req.task;

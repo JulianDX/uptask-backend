@@ -60,6 +60,16 @@ router.get(
   TaskController.getAllTasks
 );
 
+router.get(
+  "/:projectId/tasks/:taskId",
+  param("projectId").isMongoId().withMessage("ID no válido"),
+  param("taskId").isMongoId().withMessage("ID no válido"),
+  handleInputErrors,
+  verifyProjectExists,
+  verifyTaskExists,
+  TaskController.getTaskById
+);
+
 router.post(
   "/:projectId/tasks",
   param("projectId").isMongoId().withMessage("ID no válido"),
