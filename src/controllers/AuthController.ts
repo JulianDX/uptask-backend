@@ -50,4 +50,17 @@ export class AuthController {
       res.status(500).json({ error: "Hubo un error" });
     }
   }
+
+  static async login(req: Request, res: Response) {
+    try {
+      const { email } = req.body;
+      const userExists = await User.findOne({ email });
+      if (!userExists) {
+        const error = new Error("Usuario no encontrado");
+        return res.status(404).json({ error: error.message });
+      }
+    } catch (error) {
+      res.status(500).json({ error: "Hubo un error" });
+    }
+  }
 }
